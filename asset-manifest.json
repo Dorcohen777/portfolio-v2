@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/new-portfolio/static/css/main.e24c977e.css",
-    "main.js": "/new-portfolio/static/js/main.46566f45.js",
+    "main.css": "/new-portfolio/static/css/main.44f0334c.css",
+    "main.js": "/new-portfolio/static/js/main.894b97ce.js",
     "static/media/cripto2.png": "/new-portfolio/static/media/cripto2.20d26e03907a79857d28.png",
     "static/media/cripto1.png": "/new-portfolio/static/media/cripto1.9f002d562cab3674d3a2.png",
     "static/media/trell2.png": "/new-portfolio/static/media/trell2.da0f0da00160b9885f58.png",
@@ -18,9 +18,11 @@
     "static/media/trell1.png": "/new-portfolio/static/media/trell1.a587a5baeece160a25db.png",
     "static/media/cripto3.png": "/new-portfolio/static/media/cripto3.2b9609cbb7a93b799374.png",
     "static/media/cemex1.png": "/new-portfolio/static/media/cemex1.958b686a0b7ff09f6c93.png",
+    "static/media/hex1.png": "/new-portfolio/static/media/hex1.e550d91e1646b56efdf5.png",
     "static/media/amazonlp2.png": "/new-portfolio/static/media/amazonlp2.deaaeeca61e98013fe14.png",
     "static/media/seekapa2.png": "/new-portfolio/static/media/seekapa2.76c90ab40996931d6fe2.png",
     "static/media/amazon2.png": "/new-portfolio/static/media/amazon2.f003a6a335d746ce6451.png",
+    "static/media/hex5.png": "/new-portfolio/static/media/hex5.9ea601f7f22581b6eccd.png",
     "static/media/trell3.png": "/new-portfolio/static/media/trell3.ce889171ed867ee11bbc.png",
     "static/media/appsus3.jpg": "/new-portfolio/static/media/appsus3.835c1f0a46ce162cfe2a.jpg",
     "static/media/hero-img-nobg-op.png": "/new-portfolio/static/media/hero-img-nobg-op.00b6f41980120fe2a6ba.png",
@@ -28,17 +30,20 @@
     "static/media/appsus1.png": "/new-portfolio/static/media/appsus1.6c443439c78d82406f36.png",
     "static/media/trade2.jpg": "/new-portfolio/static/media/trade2.cb6b6590c34718fa0ed2.jpg",
     "static/media/trade3.png": "/new-portfolio/static/media/trade3.d19df3a1ad52de7ca614.png",
+    "static/media/hex3.png": "/new-portfolio/static/media/hex3.e2e3d058c8d2b9a86dfe.png",
+    "static/media/hex4.png": "/new-portfolio/static/media/hex4.a32769b0519268407410.png",
     "static/media/appsus2.png": "/new-portfolio/static/media/appsus2.b98cceabafe7c25563ac.png",
+    "static/media/hex2.png": "/new-portfolio/static/media/hex2.2fb380503ac6d44b36f0.png",
     "static/media/mine1.png": "/new-portfolio/static/media/mine1.c1a8f90c201b381565d2.png",
     "static/media/Fontspring-DEMO-apparel-light.otf": "/new-portfolio/static/media/Fontspring-DEMO-apparel-light.f462f5722f32b7d17f32.otf",
     "static/media/github.png": "/new-portfolio/static/media/github.4477f8b8c563df19f664.png",
     "static/media/linkedin.png": "/new-portfolio/static/media/linkedin.31349e51e91c08f06b76.png",
     "index.html": "/new-portfolio/index.html",
-    "main.e24c977e.css.map": "/new-portfolio/static/css/main.e24c977e.css.map",
-    "main.46566f45.js.map": "/new-portfolio/static/js/main.46566f45.js.map"
+    "main.44f0334c.css.map": "/new-portfolio/static/css/main.44f0334c.css.map",
+    "main.894b97ce.js.map": "/new-portfolio/static/js/main.894b97ce.js.map"
   },
   "entrypoints": [
-    "static/css/main.e24c977e.css",
-    "static/js/main.46566f45.js"
+    "static/css/main.44f0334c.css",
+    "static/js/main.894b97ce.js"
   ]
 }
