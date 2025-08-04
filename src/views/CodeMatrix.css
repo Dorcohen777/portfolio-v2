@@ -1,0 +1,26 @@
+.code-matrix-canvas {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.3;
+  background: transparent;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .code-matrix-canvas {
+    width: 200px;
+    opacity: 0.2;
+  }
+}
+
+@media (max-width: 480px) {
+  .code-matrix-canvas {
+    width: 150px;
+    opacity: 0.15;
+  }
+}

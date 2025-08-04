@@ -1,5 +1,37 @@
 const projectsData = [
     {
+       tag: 'AI-POWERED SEO/DIGITAL PLATFORM',
+       title: 'Hexlyn',
+       description:
+          'Hexlyn is an AI-powered SEO and digital marketing platform that I founded as my startup. The platform leverages artificial intelligence to provide comprehensive SEO analysis, keyword research, content optimization, and digital marketing insights. Built with modern technologies, Hexlyn helps businesses optimize their online presence and drive organic growth through data-driven strategies and automated SEO recommendations.',
+       links: [
+          'https://www.hexlyn.com/',
+       ],
+       imgs: [
+          'hex0',
+          'hex1',
+          'hex2',
+       ],
+       tech: ['nextjs', 'mongodb', 'azure', 'redis', 'typescript', 'tailwindcss'],
+    },
+    {
+       tag: 'EDUCATIONAL MOBILE APP',
+       title: 'Trader Academy',
+       description:
+          'Educational iOS/Android mobile app for stock market learning, developed with FlutterFlow. Features comprehensive courses with critical thinking solutions, custom UX/UI from Figma, API integrations, and a complete learning management system for financial education.',
+       links: [
+          '', // Add app store links when available
+       ],
+       imgs: [
+          'tra1',
+          'tra2',
+          'tra3',
+          'tra4',
+          'tra5',
+       ],
+       tech: ['dart', 'firebase'],
+    },
+    {
        tag: 'PROJECT MANAGEMENT PLATFORM',
        title: 'Trelluxe',
        description:

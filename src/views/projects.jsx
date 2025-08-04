@@ -3,6 +3,9 @@ import { mainService } from '../services/main-service'
 
 // cmp
 import { ImgCarousel } from './img-carousel'
+import TechTooltip from './TechTooltip'
+// import SkillConstellation from './SkillConstellation'
+// import ProjectCardEffect from './ProjectCardEffect'
 
 export function Projects() {
    const [projects, setProjects] = useState([]) // Initialize projects as an empty array
@@ -61,38 +64,38 @@ export function Projects() {
                         </div>
                         <div className='tech-container'>
                            {project.tech.map((skill, idx) => {
+                              if (!skill) return null; // Skip empty skills
+                              
+                              let iconSrc = '';
+                              
+                              // Set icon source based on skill
+                              if (skill === 'react') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg';
+                              else if (skill === 'html') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain-wordmark.svg';
+                              else if (skill === 'javascript') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg';
+                              else if (skill === 'mongodb') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-plain-wordmark.svg';
+                              else if (skill === 'sass') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg';
+                              else if (skill === 'css') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-plain-wordmark.svg';
+                              else if (skill === 'wordpress') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg';
+                              else if (skill === 'nodejs') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-plain-wordmark.svg';
+                              else if (skill === 'php') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg';
+                              else if (skill === 'nextjs') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg';
+                              else if (skill === 'azure') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg';
+                              else if (skill === 'redis') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg';
+                              else if (skill === 'typescript') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg';
+                              else if (skill === 'tailwindcss') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg';
+                              else if (skill === 'dart') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg';
+                              else if (skill === 'firebase') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg';
+                              
+                              if (!iconSrc) return null; // Skip if no icon found
+                              
                               return (
                                  <div
                                     className='tech-inner-container'
                                     key={idx}
                                  >
-                                    {skill === 'react' && (
-                                       <img src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg' />
-                                    )}
-                                    {skill === 'html' && (
-                                       <img src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain-wordmark.svg' />
-                                    )}
-                                    {skill === 'javascript' && (
-                                       <img src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg' />
-                                    )}
-                                    {skill === 'mongodb' && (
-                                       <img src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-plain-wordmark.svg' />
-                                    )}
-                                    {skill === 'sass' && (
-                                       <img src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg' />
-                                    )}
-                                    {skill === 'css' && (
-                                       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-plain-wordmark.svg" />
-                                    )}
-                                    {skill === 'wordpress' && (
-                                       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg" />
-                                    )}
-                                    {skill === 'nodejs' && (
-                                       <img src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-plain-wordmark.svg' />
-                                    )}
-                                    {skill === 'php' && (
-                                       <img src='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg' />
-                                    )}
+                                    <TechTooltip skill={skill}>
+                                       <img src={iconSrc} alt={skill} />
+                                    </TechTooltip>
                                  </div>
                               )
                            })}

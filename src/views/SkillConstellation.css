@@ -1,0 +1,27 @@
+.skill-constellation-canvas {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 200px;
+  pointer-events: auto;
+  z-index: 2;
+  background: transparent;
+  border-radius: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .skill-constellation-canvas {
+    width: 200px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .skill-constellation-canvas {
+    width: 150px;
+    height: 120px;
+    right: 10px;
+  }
+}

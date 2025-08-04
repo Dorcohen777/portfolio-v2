@@ -1,0 +1,38 @@
+.section-divider-container {
+  width: 100%;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-divider-canvas {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* Add gradient fade on edges */
+.section-divider-container::before,
+.section-divider-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.section-divider-container::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(10, 10, 10, 1), transparent);
+}
+
+.section-divider-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(10, 10, 10, 1), transparent);
+}

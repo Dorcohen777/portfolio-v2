@@ -1,0 +1,164 @@
+.tech-tooltip-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  /* Override the existing hover animation that moves the container */
+  transition: none !important;
+}
+
+.tech-tooltip-container:hover {
+  transform: none !important;
+}
+
+.tech-tooltip {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tech-tooltip.entering {
+  animation: tooltipFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.tech-tooltip.leaving {
+  animation: tooltipFadeOut 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.tech-tooltip-content {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  backdrop-filter: blur(10px);
+  min-width: 140px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tech-name {
+  font-weight: 600;
+  font-size: 13px;
+  color: #64ffda;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tech-description {
+  font-size: 11px;
+  color: #b3b3b3;
+  line-height: 1.3;
+  font-weight: 400;
+}
+
+.tech-tooltip-arrow {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #1a1a1a;
+}
+
+/* Smooth Animations */
+@keyframes tooltipFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px) scale(0.96);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes tooltipFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px) scale(0.96);
+    filter: blur(1px);
+  }
+}
+
+/* Smooth hover effect for tech icons */
+.tech-tooltip-container img {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+  filter: brightness(1) saturate(1);
+}
+
+.tech-tooltip-container:hover img {
+  transform: scale(1.05);
+  filter: brightness(1.1) saturate(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tech-tooltip-content {
+    min-width: 180px;
+    padding: 10px 14px;
+  }
+  
+  .tech-name {
+    font-size: 13px;
+  }
+  
+  .tech-description {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-tooltip-content {
+    min-width: 160px;
+    padding: 8px 12px;
+  }
+  
+  .tech-name {
+    font-size: 12px;
+  }
+  
+  .tech-description {
+    font-size: 10px;
+  }
+}
+
+/* Prevent tooltip from going off-screen */
+.tech-tooltip-container:first-child .tech-tooltip {
+  left: 0;
+  transform: translateX(0);
+}
+
+.tech-tooltip-container:first-child .tech-tooltip-arrow {
+  left: 20px;
+  transform: translateX(0);
+}
+
+.tech-tooltip-container:last-child .tech-tooltip {
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+}
+
+.tech-tooltip-container:last-child .tech-tooltip-arrow {
+  left: auto;
+  right: 20px;
+  transform: translateX(0);
+}

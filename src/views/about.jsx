@@ -14,6 +14,9 @@ import { FaPhoneSquare } from "react-icons/fa";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { useEffect, useRef } from 'react';
 
+// New animation components
+// import CodeMatrix from './CodeMatrix';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export function About() {

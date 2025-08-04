@@ -38,10 +38,23 @@ import seekapa1 from '../assets/imgs/seekapa/seekapa1.png'
 import seekapa2 from '../assets/imgs/seekapa/seekapa2.png'
 import seekapa3 from '../assets/imgs/seekapa/seekapa3.png'
 
+import hex0 from '../assets/imgs/hexlyn/hex0.png'
+import hex1 from '../assets/imgs/hexlyn/hex1.png'
+import hex2 from '../assets/imgs/hexlyn/hex2.png'
+
+import tra1 from '../assets/imgs/trader_academy/tra1.png'
+import tra2 from '../assets/imgs/trader_academy/tra2.png'
+import tra3 from '../assets/imgs/trader_academy/tra3.png'
+import tra4 from '../assets/imgs/trader_academy/tra4.png'
+import tra5 from '../assets/imgs/trader_academy/tra5.png'
+
 export function ImgCarousel({ img }) {
    const [slide, setSlide] = useState(0);
    const [currImage, setCurrImage] = useState(null);
    const [isLoading, setIsLoading] = useState(true);
+   
+   // Check if this is a mobile app project (trader academy)
+   const isMobileApp = img.some(imgName => imgName.startsWith('tra'));
 
    useEffect(() => {
       setIsLoading(true);
@@ -124,6 +137,30 @@ export function ImgCarousel({ img }) {
          case 'seekapa3':
             setCurrImage(seekapa3);
             break;
+         case 'hex0':
+            setCurrImage(hex0);
+            break;
+         case 'hex1':
+            setCurrImage(hex1);
+            break;
+         case 'hex2':
+            setCurrImage(hex2);
+            break;
+         case 'tra1':
+            setCurrImage(tra1);
+            break;
+         case 'tra2':
+            setCurrImage(tra2);
+            break;
+         case 'tra3':
+            setCurrImage(tra3);
+            break;
+         case 'tra4':
+            setCurrImage(tra4);
+            break;
+         case 'tra5':
+            setCurrImage(tra5);
+            break;
          default:
             setCurrImage(null);
             break;
@@ -141,7 +178,7 @@ export function ImgCarousel({ img }) {
    };
 
    return (
-      <section className="carousel-container">
+      <section className={`carousel-container ${isMobileApp ? 'mobile-app-carousel' : ''}`}>
          <BsArrowLeftCircleFill
             className="arrow arrow-left"
             onClick={prevSlide}
@@ -154,7 +191,7 @@ export function ImgCarousel({ img }) {
                <img
                   src={currImage}
                   alt={`Slide ${idx + 1}`}
-                  className={slide === idx ? 'slide' : 'slide-hidden'}
+                  className={slide === idx ? `slide ${isMobileApp ? 'mobile-app-image' : ''}` : 'slide-hidden'}
                   style={{ opacity: isLoading ? 0 : 1 }}
                   onLoad={() => setIsLoading(false)}
                />

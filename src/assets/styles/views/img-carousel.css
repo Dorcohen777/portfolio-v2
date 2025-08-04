@@ -124,3 +124,44 @@
     transform: translate(-50%, -50%) rotate(360deg);
   }
 }
+
+/* Mobile App Carousel Styles - Force override */
+.carousel-container.mobile-app-carousel {
+  background-color: #f5f5f5 !important;
+  height: 380px !important;
+}
+
+.slide.mobile-app-image {
+  max-height: 350px !important;
+  max-width: 400px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  background-color: transparent !important;
+  border-radius: 8px !important;
+}
+
+/* Responsive adjustments for mobile app carousel */
+@media (max-width: 768px) {
+  .mobile-app-carousel {
+    height: 320px;
+    padding: 15px;
+  }
+  
+  .mobile-app-image {
+    max-width: 90%;  /* Larger on tablets */
+    max-height: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-app-carousel {
+    height: 250px;
+    padding: 10px;
+  }
+  
+  .mobile-app-image {
+    max-width: 95%;  /* Nearly full width on mobile */
+    max-height: 85%;
+  }
+}

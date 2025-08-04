@@ -8,11 +8,21 @@ import heroImg from '../assets/imgs/hero-img-nobg-op.png'
 // views
 import { About } from './about'
 import { Projects } from './projects'
-import PhysicsDemo from './PhysicsDemo';
+import FloatingParticles from './FloatingParticles';
+import Interactive3D from './Interactive3D';
+import GeometricGrid from './GeometricGrid';
+// import SectionDivider from './SectionDivider';
+// import PhysicsDemo from './PhysicsDemo';
 
 export function Hero() {
     const revealRef = useRef();
     const [hasHeroAnimated, setHasHeroAnimated] = useState(false);
+    
+    // Choose your preferred animation:
+    // 1. FloatingParticles - Recommended: Modern, minimal, performs well
+    // 2. Interactive3D - 3D geometric shapes with mouse interaction
+    // 3. GeometricGrid - Ultra-minimal grid pattern
+    const AnimationComponent = FloatingParticles;
 
     useEffect(() => {
 
@@ -47,7 +57,7 @@ export function Hero() {
     return (
 
         <>
-            <PhysicsDemo />
+            <AnimationComponent />
             <section className="hero-container">
                 <div className="my-bio-container">
                     <div className='my-bio-content'>
