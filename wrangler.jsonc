@@ -2,6 +2,8 @@
   "name": "portfolio",
   "compatibility_date": "2025-11-15",
   "assets": {
-    "directory": "./build"
+    "directory": "./build",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "single-page-application"
   }
 }
