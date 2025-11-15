@@ -1,56 +1,125 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Center, Float } from '@react-three/drei';
+import { OrbitControls, Center } from '@react-three/drei';
+import * as THREE from 'three';
 import '../assets/styles/views/threeDDivider.css';
 
 /**
- * Animated 3D Geometric Node Component
+ * Supernova Particle System
  */
-function GeometricNode({ position, color, scale = 1, shape = 'box' }) {
-  const meshRef = useRef();
+function SupernovaParticles({ active, centerPosition = [0, 0, 0] }) {
+  const particlesRef = useRef();
+  const particleCount = 200;
 
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    // Gentle floating rotation
-    meshRef.current.rotation.y = time * 0.5;
-    meshRef.current.rotation.x = Math.sin(time * 0.7) * 0.3;
-    // Subtle scale pulse
-    const pulse = 1 + Math.sin(time * 2 + position[0]) * 0.1;
-    meshRef.current.scale.set(scale * pulse, scale * pulse, scale * pulse);
+  // Generate initial particle data
+  const particleData = useMemo(() => {
+    const positions = new Float32Array(particleCount * 3);
+    const velocities = [];
+    const colors = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount; i++) {
+      // Start all particles at center
+      positions[i * 3] = 0;
+      positions[i * 3 + 1] = 0;
+      positions[i * 3 + 2] = 0;
+
+      // Random velocity directions (sphere distribution)
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      const speed = 0.5 + Math.random() * 1.5;
+
+      velocities.push({
+        x: Math.sin(phi) * Math.cos(theta) * speed,
+        y: Math.sin(phi) * Math.sin(theta) * speed,
+        z: Math.cos(phi) * speed
+      });
+
+      // Warm supernova colors (#f6d3b7, oranges, yellows, whites)
+      const colorChoice = Math.random();
+      if (colorChoice < 0.3) {
+        // Warm beige
+        colors[i * 3] = 0.96;
+        colors[i * 3 + 1] = 0.83;
+        colors[i * 3 + 2] = 0.72;
+      } else if (colorChoice < 0.6) {
+        // Orange
+        colors[i * 3] = 1.0;
+        colors[i * 3 + 1] = 0.6;
+        colors[i * 3 + 2] = 0.2;
+      } else if (colorChoice < 0.85) {
+        // Yellow
+        colors[i * 3] = 1.0;
+        colors[i * 3 + 1] = 0.9;
+        colors[i * 3 + 2] = 0.3;
+      } else {
+        // White
+        colors[i * 3] = 1.0;
+        colors[i * 3 + 1] = 1.0;
+        colors[i * 3 + 2] = 1.0;
+      }
+    }
+
+    return { positions, velocities, colors };
+  }, []);
+
+  useFrame(() => {
+    if (!particlesRef.current || !active) return;
+
+    const positions = particlesRef.current.geometry.attributes.position.array;
+
+    for (let i = 0; i < particleCount; i++) {
+      // Update positions based on velocity
+      positions[i * 3] += particleData.velocities[i].x * 0.05;
+      positions[i * 3 + 1] += particleData.velocities[i].y * 0.05;
+      positions[i * 3 + 2] += particleData.velocities[i].z * 0.05;
+
+      // Add slight gravity effect
+      particleData.velocities[i].y -= 0.002;
+    }
+
+    particlesRef.current.geometry.attributes.position.needsUpdate = true;
   });
 
-  const geometry = shape === 'box' ?
-    <boxGeometry args={[0.5, 0.5, 0.5]} /> :
-    shape === 'octahedron' ?
-    <octahedronGeometry args={[0.4]} /> :
-    <tetrahedronGeometry args={[0.4]} />;
+  if (!active) return null;
 
   return (
-    <Float
-      speed={2}
-      rotationIntensity={0.5}
-      floatIntensity={0.5}
-    >
-      <mesh ref={meshRef} position={position}>
-        {geometry}
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={0.6}
-          metalness={0.9}
-          roughness={0.1}
+    <points ref={particlesRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={particleCount}
+          array={particleData.positions}
+          itemSize={3}
         />
-      </mesh>
-    </Float>
+        <bufferAttribute
+          attach="attributes-color"
+          count={particleCount}
+          array={particleData.colors}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.08}
+        vertexColors
+        transparent
+        opacity={0.9}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+      />
+    </points>
   );
 }
 
 /**
- * Main 3D Structure with scroll interaction
+ * Main 3D Structure with scroll interaction and supernova effect
  */
 function ThreeDStructure({ scrollProgress }) {
   const groupRef = useRef();
   const sphereRef = useRef();
+  const [exploding, setExploding] = useState(false);
+  const [sphereVisible, setSphereVisible] = useState(true);
+  const [hasBeenCentered, setHasBeenCentered] = useState(false);
+  const prevScrollProgressRef = useRef(scrollProgress);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
@@ -61,21 +130,72 @@ function ThreeDStructure({ scrollProgress }) {
       groupRef.current.rotation.x = Math.sin(time * 0.1) * 0.1;
     }
 
+    // Track if the ball has been centered in viewport at least once
+    if (scrollProgress > 0.5 && !hasBeenCentered) {
+      setHasBeenCentered(true);
+    }
+
+    // Detect scroll direction
+    const scrollingDown = scrollProgress < prevScrollProgressRef.current;
+    prevScrollProgressRef.current = scrollProgress;
+
     // Scroll-based effects
-    if (sphereRef.current && scrollProgress !== null) {
-      // Scale effect based on scroll
-      const scaleEffect = 1 + scrollProgress * 0.5;
+    // Trigger explosion ONLY when:
+    // 1. Scrolling DOWN (leaving the section)
+    // 2. Ball has been centered at least once (to avoid triggering on page load)
+    // 3. ScrollProgress is in the trigger zone
+    if (
+      scrollProgress < 0.2 &&
+      scrollProgress > -0.1 &&
+      !exploding &&
+      sphereVisible &&
+      hasBeenCentered &&
+      scrollingDown
+    ) {
+      setExploding(true);
+      setSphereVisible(false);
+
+      // Reset explosion after animation completes
+      setTimeout(() => {
+        setExploding(false);
+        setHasBeenCentered(false); // Reset for next time
+      }, 3000);
+    }
+
+    // When scrolling back in (scrollProgress above 0.3), show sphere again
+    if (scrollProgress > 0.3 && !sphereVisible) {
+      setSphereVisible(true);
+    }
+
+    // Scale effect based on scroll (when visible)
+    if (sphereRef.current && sphereVisible) {
+      // Keep ball at good size throughout most of scroll
+      const scaleEffect = Math.max(0.6, 0.8 + scrollProgress * 0.3);
       sphereRef.current.scale.set(scaleEffect, scaleEffect, scaleEffect);
 
       // Color shift based on scroll (emissive intensity)
-      const emissiveIntensity = 0.2 + scrollProgress * 0.5;
+      const emissiveIntensity = Math.max(0.2, 0.3 + scrollProgress * 0.4);
       if (sphereRef.current.material) {
         sphereRef.current.material.emissiveIntensity = emissiveIntensity;
+      }
+
+      // Start fading when approaching the explosion threshold
+      if (scrollProgress < 0.4) {
+        // Fade from full opacity to 0 as it goes from 0.4 to 0.2
+        const fadeOpacity = ((scrollProgress - 0.2) / 0.2) * 0.7;
+        if (sphereRef.current.material) {
+          sphereRef.current.material.opacity = Math.max(0.1, fadeOpacity);
+        }
+      } else {
+        // Keep full opacity when in view
+        if (sphereRef.current.material) {
+          sphereRef.current.material.opacity = 0.7;
+        }
       }
     }
 
     // Pulse effect on sphere
-    if (sphereRef.current) {
+    if (sphereRef.current && sphereVisible) {
       const pulse = 1 + Math.sin(time * 0.8) * 0.02;
       const currentScale = sphereRef.current.scale.x;
       sphereRef.current.scale.set(
@@ -88,18 +208,23 @@ function ThreeDStructure({ scrollProgress }) {
 
   return (
     <group ref={groupRef}>
-      {/* Central wireframe sphere */}
-      <mesh ref={sphereRef}>
-        <sphereGeometry args={[1.8, 32, 32]} />
-        <meshStandardMaterial
-          color="#f6d3b7"
-          emissive="#f6d3b7"
-          emissiveIntensity={0.3}
-          wireframe={true}
-          transparent={true}
-          opacity={0.7}
-        />
-      </mesh>
+      {/* Central wireframe sphere - SMALLER */}
+      {sphereVisible && (
+        <mesh ref={sphereRef}>
+          <sphereGeometry args={[1.4, 32, 32]} />
+          <meshStandardMaterial
+            color="#f6d3b7"
+            emissive="#f6d3b7"
+            emissiveIntensity={0.3}
+            wireframe={true}
+            transparent={true}
+            opacity={0.7}
+          />
+        </mesh>
+      )}
+
+      {/* Supernova explosion particles */}
+      <SupernovaParticles active={exploding} />
     </group>
   );
 }
@@ -118,17 +243,32 @@ const ThreeDDivider = () => {
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      // Calculate when the element is in viewport
-      // 0 = just entering viewport from bottom
-      // 1 = centered in viewport
-      // Progress goes from 0 to 1 as element scrolls into view
+      // Calculate scroll progress:
+      // Positive when in view: 1.0 (centered) to 0.0 (at edge)
+      // Negative when scrolled past: 0.0 to -1.0 (fully out of view)
       const elementCenter = rect.top + rect.height / 2;
       const viewportCenter = windowHeight / 2;
-      const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
-      const maxDistance = windowHeight;
 
-      let progress = 1 - (distanceFromCenter / maxDistance);
-      progress = Math.max(0, Math.min(1, progress)); // Clamp between 0 and 1
+      // Distance from center (positive when below center, negative when above)
+      const distanceFromCenter = elementCenter - viewportCenter;
+      const maxDistance = windowHeight / 2;
+
+      // Calculate progress
+      let progress;
+      if (elementCenter > viewportCenter) {
+        // Element is below center - entering from bottom
+        progress = Math.max(0, 1 - (distanceFromCenter / maxDistance));
+      } else {
+        // Element is above center - leaving from top
+        const distanceAbove = Math.abs(distanceFromCenter);
+        if (distanceAbove < maxDistance) {
+          // Still visible, going from 1 to 0
+          progress = 1 - (distanceAbove / maxDistance);
+        } else {
+          // Scrolled past - negative values
+          progress = -(distanceAbove - maxDistance) / maxDistance;
+        }
+      }
 
       setScrollProgress(progress);
     };
