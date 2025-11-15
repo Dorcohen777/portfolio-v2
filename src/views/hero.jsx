@@ -1,6 +1,8 @@
 //splt js
 import splitFunction from 'spltjs';
 import anime from 'animejs';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { useEffect, useRef, useState } from 'react';
 import heroImg from '../assets/imgs/hero-img-nobg-op.png'
@@ -9,17 +11,24 @@ import heroImg from '../assets/imgs/hero-img-nobg-op.png'
 import { About } from './about'
 import { Projects } from './projects'
 import FloatingParticles from './FloatingParticles';
+import ThreeDDivider from './ThreeDDivider';
 // import Interactive3D from './Interactive3D';
 // import GeometricGrid from './GeometricGrid';
 // import SectionDivider from './SectionDivider';
 // import PhysicsDemo from './PhysicsDemo';
 
+// Register GSAP plugin
+gsap.registerPlugin(ScrollTrigger);
+
 export function Hero() {
     const revealRef = useRef();
+    const heroImgRef = useRef();
+    const bioContentRef = useRef();
+    const scrollIndicatorRef = useRef();
     const [hasHeroAnimated, setHasHeroAnimated] = useState(false);
-    
+
     // Choose your preferred animation:
-    // 1. FloatingParticles - Recommended: Modern, minimal, performs well
+    // 1. FloatingParticles - Modern, minimal, performs well
     // 2. Interactive3D - 3D geometric shapes with mouse interaction
     // 3. GeometricGrid - Ultra-minimal grid pattern
     const AnimationComponent = FloatingParticles;
@@ -55,20 +64,71 @@ export function Hero() {
             }
         };
     }, [hasHeroAnimated]);
+
+    // Parallax effect with GSAP ScrollTrigger
+    useEffect(() => {
+        // Parallax for hero image (moves slower, creating depth)
+        if (heroImgRef.current) {
+            gsap.to(heroImgRef.current, {
+                y: 150,
+                opacity: 0.3,
+                scale: 1.1,
+                scrollTrigger: {
+                    trigger: '.hero-container',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1.5,
+                }
+            });
+        }
+
+        // Parallax for bio content (moves faster, stays in focus longer)
+        if (bioContentRef.current) {
+            gsap.to(bioContentRef.current, {
+                y: -80,
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: '.hero-container',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1,
+                }
+            });
+        }
+
+        // Parallax for scroll indicator (fades and moves quickly)
+        if (scrollIndicatorRef.current) {
+            gsap.to(scrollIndicatorRef.current, {
+                y: 100,
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: '.hero-container',
+                    start: 'top top',
+                    end: '50% top',
+                    scrub: 0.5,
+                }
+            });
+        }
+
+        // Cleanup ScrollTrigger instances
+        return () => {
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
+    }, []);
     return (
 
         <>
             <AnimationComponent />
             <section className="hero-container">
                 <div className="my-bio-container">
-                    <div className='my-bio-content'>
+                    <div className='my-bio-content' ref={bioContentRef}>
                         <h2 className='hero-title heroani' ref={revealRef}>Hi, I'm Dor a Passionate Full Stack Web Developer</h2>
                         <p className='hero-info'></p>
                     </div>
-                    <div className="hero-img-container">
+                    <div className="hero-img-container" ref={heroImgRef}>
                         <img src={heroImg} className='hero-img' alt="Dor Cohen - Full Stack Web Developer" />
                     </div>
-                    <div className='scroll-container'>
+                    <div className='scroll-container' ref={scrollIndicatorRef}>
                         <div className="dot"></div>
                     </div>
                 </div>
@@ -77,6 +137,8 @@ export function Hero() {
             <section>
                 <About />
             </section>
+
+            <ThreeDDivider />
 
             <section>
                 <Projects />

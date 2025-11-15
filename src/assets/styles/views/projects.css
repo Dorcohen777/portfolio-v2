@@ -1,12 +1,13 @@
 .projects-section {
     padding: 4rem 0;
+    perspective: 1000px;
 }
 
 .projects-title {
     position: relative;
     font-size: 4.5rem;
     margin-block: 4rem 2rem;
-    color: white;
+    color: #F6D3B7; /* Gold/beige theme color */
     letter-spacing: -0.02em;
     font-weight: 700;
     transition: transform 0.3s ease;
@@ -35,6 +36,8 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
 }
 
 .project-card:hover {
@@ -46,6 +49,11 @@
     width: 100%;
     max-width: 600px;
     z-index: 10;
+    will-change: transform;
+}
+
+.project-images {
+    will-change: transform;
 }
 
 .project-tag {

@@ -1,5 +1,7 @@
 .hero-container {
     height: calc(100vh - 59.438px);
+    position: relative;
+    overflow: hidden;
 }
 
 .hero-section {
@@ -25,6 +27,7 @@
     backdrop-filter: blur(35px);
     color: #F6D3B7;
     font-size: 2rem;
+    will-change: transform, opacity;
 }
 
 .reveal {
@@ -37,11 +40,13 @@
     overflow: hidden;
     max-height: 90%;
     margin-bottom: 130px;
+    will-change: transform, opacity;
 }
 
 .hero-img {
     width: 100%;
     animation: rotate-animation 59s infinite ease;
+    will-change: transform;
 }
 
 /* scroll container style */
@@ -53,7 +58,8 @@
     background-color: #F6D3B7;
     position: absolute;
     right: 15%;
-    bottom: 13%; 
+    bottom: 13%;
+    will-change: transform, opacity;
 }
 
 .dot {

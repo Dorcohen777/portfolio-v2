@@ -1,19 +1,131 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { mainService } from '../services/main-service'
-
-// cmp
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ImgCarousel } from './img-carousel'
 import TechTooltip from './TechTooltip'
 import { shadcnIcon, mongooseIcon } from './img-carousel'
 // import SkillConstellation from './SkillConstellation'
 // import ProjectCardEffect from './ProjectCardEffect'
 
+// Register GSAP plugin
+gsap.registerPlugin(ScrollTrigger)
+
 export function Projects() {
    const [projects, setProjects] = useState([]) // Initialize projects as an empty array
+   const titleRef = useRef(null)
+   const projectCardsRef = useRef([])
 
    useEffect(() => {
       setProjects(mainService.projectsData)
    }, [])
+
+   // Simple fade-up animation for "Projects." title
+   useEffect(() => {
+      const titleElement = titleRef.current
+      if (!titleElement) return
+
+      // Simple, reliable fade-up animation
+      gsap.fromTo(titleElement,
+         {
+            opacity: 0,
+            y: 50,
+            scale: 0.95,
+         },
+         {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.2,
+            ease: 'power3.out',
+            scrollTrigger: {
+               trigger: titleElement,
+               start: 'top 85%',
+               toggleActions: 'play none none none',
+            }
+         }
+      )
+
+      // Cleanup
+      return () => {
+         ScrollTrigger.getAll().forEach(trigger => {
+            if (trigger.vars.trigger === titleElement) {
+               trigger.kill()
+            }
+         })
+      }
+   }, [])
+
+   // Parallax animations for project cards
+   useEffect(() => {
+      if (projectCardsRef.current.length === 0) return
+
+      const cards = projectCardsRef.current.filter(card => card !== null)
+
+      cards.forEach((card, index) => {
+         const isEven = index % 2 === 0
+
+         // Entrance animation - staggered reveal
+         gsap.fromTo(card,
+            {
+               opacity: 0,
+               y: 100,
+               rotateX: 15,
+               scale: 0.9,
+            },
+            {
+               opacity: 1,
+               y: 0,
+               rotateX: 0,
+               scale: 1,
+               duration: 1.2,
+               ease: 'power3.out',
+               scrollTrigger: {
+                  trigger: card,
+                  start: 'top 85%',
+                  toggleActions: 'play none none none',
+               }
+            }
+         )
+
+         // Parallax effect while scrolling
+         const projectInfo = card.querySelector('.project-info')
+         const projectImages = card.querySelector('.project-images')
+
+         if (projectInfo && projectImages) {
+            // Info moves slower (creates depth)
+            gsap.to(projectInfo, {
+               y: isEven ? -50 : -80,
+               scrollTrigger: {
+                  trigger: card,
+                  start: 'top bottom',
+                  end: 'bottom top',
+                  scrub: 1.5,
+               }
+            })
+
+            // Images move faster (foreground effect)
+            gsap.to(projectImages, {
+               y: isEven ? 80 : 50,
+               scrollTrigger: {
+                  trigger: card,
+                  start: 'top bottom',
+                  end: 'bottom top',
+                  scrub: 1,
+               }
+            })
+         }
+      })
+
+      // Cleanup
+      return () => {
+         ScrollTrigger.getAll().forEach(trigger => {
+            if (cards.some(card => trigger.vars.trigger === card)) {
+               trigger.kill()
+            }
+         })
+      }
+   }, [projects])
 
    function addSpace(desc) {
       const descriptionWithLineBreaks = desc.split('.').join('.<br/> <br/>')
@@ -28,14 +140,18 @@ export function Projects() {
 
    return (
       <section className='projects-section main-layout' id='projects'>
-         <div className='fade-up'>
-            <h2 className='projects-title underline-style'> Projects. </h2>
+         <div>
+            <h2 ref={titleRef} className='projects-title underline-style'> Projects. </h2>
             <p className='project-note'>Note that there are more projects I have developed, these are just a few.</p>
          </div>
          <div className='projects-container' id='projects'>
             {projects.map((project, idx) => {
                return (
-                  <article key={idx} className='project-card'>
+                  <article
+                     key={idx}
+                     className='project-card'
+                     ref={el => projectCardsRef.current[idx] = el}
+                  >
                      <div className='project-info'>
                         <p className='project-tag'>{project.tag}</p>
                         <h2>{project.title}</h2>

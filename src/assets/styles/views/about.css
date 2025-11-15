@@ -25,6 +25,7 @@
 
 .about-me-content {
     color: #DEBFA8;
+    will-change: transform;
 }
 
 .contact-information-container {
@@ -46,6 +47,7 @@
 .about-img-container {
     position: relative;
     width: 50%;
+    will-change: transform;
 }
 
 .my-image {

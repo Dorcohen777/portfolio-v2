@@ -21,6 +21,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function About() {
     const gridRef = useRef();
+    const aboutContainerRef = useRef();
+    const aboutImgRef = useRef();
 
     useGSAP(() => {
         const tl = gsap.timeline({
@@ -40,6 +42,31 @@ export function About() {
             duration: 0.6,
 
         });
+
+        // Parallax effect for about section
+        if (aboutContainerRef.current && aboutImgRef.current) {
+            // Content moves slower
+            gsap.to('.about-me-content', {
+                y: -60,
+                scrollTrigger: {
+                    trigger: aboutContainerRef.current,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1.5,
+                }
+            });
+
+            // Image moves faster (foreground effect)
+            gsap.to(aboutImgRef.current, {
+                y: 80,
+                scrollTrigger: {
+                    trigger: aboutContainerRef.current,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1,
+                }
+            });
+        }
     });
 
     useEffect(() => {
@@ -76,7 +103,7 @@ export function About() {
 
     return (
         <section className="main-layout">
-            <div className="about-container" id='about'>
+            <div className="about-container" id='about' ref={aboutContainerRef}>
                 <div className='about-info-container'>
                     <div className="about-me-content">
                         <h1 className='about-title fade-up' >Who Am I?</h1>
@@ -98,7 +125,7 @@ export function About() {
                         </div>
                     </div>
                 </div>
-                <div className="about-img-container">
+                <div className="about-img-container" ref={aboutImgRef}>
                     <img src={me} className='my-image' alt='Dor Cohen' />
                     <div className='grid-container' ref={gridRef}>
                         {[...Array(14 * 5)].map((_, i) => <div key={i} className='grid-element' />)}
