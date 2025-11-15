@@ -92,14 +92,14 @@ export function About() {
                                 <p><MdOutlineAlternateEmail /> dorcohen1337@gmail.com</p>
                             </div>
                             <div className="button-container">
-                                <a href='https://github.com/Dorcohen777' target='_blank'> <img className='img-contact' src={github} /> </a>
-                                <a href='https://www.linkedin.com/in/dor-cohen-618745225/' target='_blank'> <img className='img-contact' src={linkedin} /> </a>
+                                <a href='https://github.com/Dorcohen777' target='_blank' rel='noreferrer'> <img className='img-contact' src={github} alt='GitHub Profile' /> </a>
+                                <a href='https://www.linkedin.com/in/dor-cohen-618745225/' target='_blank' rel='noreferrer'> <img className='img-contact' src={linkedin} alt='LinkedIn Profile' /> </a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="about-img-container">
-                    <img src={me} className='my-image' />
+                    <img src={me} className='my-image' alt='Dor Cohen' />
                     <div className='grid-container' ref={gridRef}>
                         {[...Array(14 * 5)].map((_, i) => <div key={i} className='grid-element' />)}
                     </div>

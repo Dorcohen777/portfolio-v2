@@ -1,6 +1,6 @@
 {
   "name": "portfolio",
-  "homepage": "https://dorcohen777.github.io/new-portfolio",
+  "homepage": "https://dorcohen777.github.io/portfolio-v2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -49,6 +49,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1"
+    "gh-pages": "^6.3.0"
   }
 }

@@ -4,6 +4,7 @@ import { mainService } from '../services/main-service'
 // cmp
 import { ImgCarousel } from './img-carousel'
 import TechTooltip from './TechTooltip'
+import { shadcnIcon, mongooseIcon } from './img-carousel'
 // import SkillConstellation from './SkillConstellation'
 // import ProjectCardEffect from './ProjectCardEffect'
 
@@ -42,20 +43,20 @@ export function Projects() {
                            {addSpace(project.description)}
                         </p>
                         <div className='project-btns-container'>
-                           <a href={project.links[0]} target='_blank'>
+                           <a href={project.links[0]} target='_blank' rel='noreferrer'>
                               <button className='try-live-btn pointer hover-effect'>
                                  Try Live
                               </button>
                            </a>
                            {project.links[1] && (
-                              <a href={project.links[1]} target='_blank'>
+                              <a href={project.links[1]} target='_blank' rel='noreferrer'>
                                  <button className='github-btn pointer hover-effect'>
                                     GitHub
                                  </button>
                               </a>
                            )}
                            {project.links[2] && (
-                              <a href={project.links[2]} target='_blank'>
+                              <a href={project.links[2]} target='_blank' rel='noreferrer'>
                                  <button className='youtube-btn pointer hover-effect'>
                                     Watch In Youtube
                                  </button>
@@ -85,6 +86,8 @@ export function Projects() {
                               else if (skill === 'tailwindcss') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg';
                               else if (skill === 'dart') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg';
                               else if (skill === 'firebase') iconSrc = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg';
+                              else if (skill === 'moongosh') iconSrc = mongooseIcon;
+                              else if (skill === 'shadcn') iconSrc = shadcnIcon;
                               
                               if (!iconSrc) return null; // Skip if no icon found
                               

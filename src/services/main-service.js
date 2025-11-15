@@ -1,4 +1,20 @@
 const projectsData = [
+
+   {
+       tag: 'TRAFFIC MANAGEMENT PLATFORM',
+       title: 'TrackFlare',
+       description:
+          'Trackflare is a traffic management system that I developed for the company I work for to handle hundreds of leads per day. It integrates with CRM platforms and uses advanced logic to distribute traffic based on multiple parameters.\n\nThe system includes an RBAC permission model, a full authentication system, Microsoft SAML integration, and a wide range of business logic to support complex workflows.\n\nTrackflare also provides a comprehensive analytics dashboard for monitoring performance, traffic distribution, and lead behavior.',
+       links: [
+          '',
+       ],
+       imgs: [
+          'trackflare1',
+          'trackflare2',
+          'trackflare3',
+       ],
+       tech: ['nextjs', 'mongodb', 'typescript', 'shadcn', 'tailwindcss', 'moongosh', 'nodejs'],
+    },
     {
        tag: 'AI-POWERED SEO/DIGITAL PLATFORM',
        title: 'Hexlyn',
@@ -46,7 +62,7 @@ const projectsData = [
           'trell2',
           'trell3',
        ],
-       tech: ['react', 'html', 'javascript', , 'mongodb', 'nodejs', 'sass'],
+       tech: ['react', 'html', 'javascript', 'mongodb', 'nodejs', 'sass'],
     },
     {
       tag: 'WEB PROJECT',
@@ -173,7 +189,8 @@ const projectsData = [
        imgs: [
           'mine1',
        ],
-    }
+    },
+
     
  ]
  

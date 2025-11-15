@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 
 const Interactive3D = () => {
   const canvasRef = useRef(null);
-  const animationRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -112,6 +111,8 @@ const Interactive3D = () => {
               else ctx.lineTo(x, y);
             }
             ctx.closePath();
+            break;
+          default:
             break;
         }
 

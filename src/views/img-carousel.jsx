@@ -48,6 +48,13 @@ import tra3 from '../assets/imgs/trader_academy/tra3.png'
 import tra4 from '../assets/imgs/trader_academy/tra4.png'
 import tra5 from '../assets/imgs/trader_academy/tra5.png'
 
+import trackflare1 from '../assets/imgs/trackflare/trackflare1.png'
+import trackflare2 from '../assets/imgs/trackflare/trackflare2.png'
+import trackflare3 from '../assets/imgs/trackflare/trackflare3.png'
+
+import shadcnIcon from '../assets/imgs/icons/shadcn.png'
+import mongooseIcon from '../assets/imgs/icons/mongoose.png'
+
 export function ImgCarousel({ img }) {
    const [slide, setSlide] = useState(0);
    const [currImage, setCurrImage] = useState(null);
@@ -161,6 +168,15 @@ export function ImgCarousel({ img }) {
          case 'tra5':
             setCurrImage(tra5);
             break;
+         case 'trackflare1':
+            setCurrImage(trackflare1);
+            break;
+         case 'trackflare2':
+            setCurrImage(trackflare2);
+            break;
+         case 'trackflare3':
+            setCurrImage(trackflare3);
+            break;
          default:
             setCurrImage(null);
             break;
@@ -221,3 +237,5 @@ export function ImgCarousel({ img }) {
       </section>
    );
 }
+
+export { shadcnIcon, mongooseIcon }

@@ -1,4 +1,4 @@
-//splt js 
+//splt js
 import splitFunction from 'spltjs';
 import anime from 'animejs';
 
@@ -9,8 +9,8 @@ import heroImg from '../assets/imgs/hero-img-nobg-op.png'
 import { About } from './about'
 import { Projects } from './projects'
 import FloatingParticles from './FloatingParticles';
-import Interactive3D from './Interactive3D';
-import GeometricGrid from './GeometricGrid';
+// import Interactive3D from './Interactive3D';
+// import GeometricGrid from './GeometricGrid';
 // import SectionDivider from './SectionDivider';
 // import PhysicsDemo from './PhysicsDemo';
 
@@ -43,13 +43,14 @@ export function Hero() {
             });
         }, { threshold: 1 });
 
-        if (revealRef.current) {
-            observer.observe(revealRef.current);
+        const currentRef = revealRef.current;
+        if (currentRef) {
+            observer.observe(currentRef);
         }
 
         // Cleanup function to disconnect the observer
         return () => {
-            if (revealRef.current) {
+            if (currentRef) {
                 observer.disconnect();
             }
         };
@@ -65,7 +66,7 @@ export function Hero() {
                         <p className='hero-info'></p>
                     </div>
                     <div className="hero-img-container">
-                        <img src={heroImg} className='hero-img' />
+                        <img src={heroImg} className='hero-img' alt="Dor Cohen - Full Stack Web Developer" />
                     </div>
                     <div className='scroll-container'>
                         <div className="dot"></div>

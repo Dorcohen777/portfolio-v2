@@ -45,7 +45,6 @@ const FloatingParticles = () => {
     // Mouse interaction (subtle, doesn't block scroll)
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e;
-      const { innerWidth, innerHeight } = window;
       
       particles.forEach((particle, index) => {
         const rect = particle.getBoundingClientRect();
