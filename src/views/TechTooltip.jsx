@@ -1,23 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../components/ui/tooltip';
 import './TechTooltip.css';
 
 const TechTooltip = ({ skill, children }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isLeaving, setIsLeaving] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsLeaving(false);
-    setIsVisible(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsLeaving(true);
-    setTimeout(() => {
-      setIsVisible(false);
-      setIsLeaving(false);
-    }, 150); // Match animation duration
-  };
-
   const techInfo = {
     // Frontend Technologies
     react: {
@@ -99,22 +89,19 @@ const TechTooltip = ({ skill, children }) => {
   const info = techInfo[skill] || { name: skill, description: 'Technology' };
 
   return (
-    <div 
-      className="tech-tooltip-container"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {children}
-      {isVisible && (
-        <div className={`tech-tooltip ${isLeaving ? 'leaving' : 'entering'}`}>
-          <div className="tech-tooltip-content">
-            <div className="tech-name">{info.name}</div>
-            <div className="tech-description">{info.description}</div>
+    <TooltipProvider delayDuration={200}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="tech-tooltip-container">
+            {children}
           </div>
-          <div className="tech-tooltip-arrow"></div>
-        </div>
-      )}
-    </div>
+        </TooltipTrigger>
+        <TooltipContent side="top" align="center" className="tech-tooltip-shadcn">
+          <div className="tech-name">{info.name}</div>
+          <div className="tech-description">{info.description}</div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 
