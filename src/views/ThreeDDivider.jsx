@@ -9,7 +9,7 @@ import '../assets/styles/views/threeDDivider.css';
  */
 function SupernovaParticles({ active, centerPosition = [0, 0, 0] }) {
   const particlesRef = useRef();
-  const particleCount = 200;
+  const particleCount = 300; // More particles for bigger effect
 
   // Generate initial particle data
   const particleData = useMemo(() => {
@@ -24,13 +24,17 @@ function SupernovaParticles({ active, centerPosition = [0, 0, 0] }) {
       positions[i * 3 + 2] = 0;
 
       // Random velocity directions (sphere distribution)
+      // Bias more particles downward to reach Projects section
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
-      const speed = 0.5 + Math.random() * 1.5;
+      const speed = 1.5 + Math.random() * 3.0; // Much faster particles
+
+      // Extra downward bias for some particles
+      const downwardBias = Math.random() > 0.6 ? -0.8 : 0;
 
       velocities.push({
         x: Math.sin(phi) * Math.cos(theta) * speed,
-        y: Math.sin(phi) * Math.sin(theta) * speed,
+        y: Math.sin(phi) * Math.sin(theta) * speed + downwardBias,
         z: Math.cos(phi) * speed
       });
 
@@ -68,13 +72,13 @@ function SupernovaParticles({ active, centerPosition = [0, 0, 0] }) {
     const positions = particlesRef.current.geometry.attributes.position.array;
 
     for (let i = 0; i < particleCount; i++) {
-      // Update positions based on velocity
-      positions[i * 3] += particleData.velocities[i].x * 0.05;
-      positions[i * 3 + 1] += particleData.velocities[i].y * 0.05;
-      positions[i * 3 + 2] += particleData.velocities[i].z * 0.05;
+      // Update positions based on velocity (faster movement)
+      positions[i * 3] += particleData.velocities[i].x * 0.12;
+      positions[i * 3 + 1] += particleData.velocities[i].y * 0.12;
+      positions[i * 3 + 2] += particleData.velocities[i].z * 0.12;
 
-      // Add slight gravity effect
-      particleData.velocities[i].y -= 0.002;
+      // Very slight gravity effect (less gravity = particles travel further)
+      particleData.velocities[i].y -= 0.001;
     }
 
     particlesRef.current.geometry.attributes.position.needsUpdate = true;
@@ -143,10 +147,10 @@ function ThreeDStructure({ scrollProgress }) {
     // Trigger explosion ONLY when:
     // 1. Scrolling DOWN (leaving the section)
     // 2. Ball has been centered at least once (to avoid triggering on page load)
-    // 3. ScrollProgress is in the trigger zone
+    // 3. ScrollProgress is in the trigger zone (MUCH earlier trigger)
     if (
-      scrollProgress < 0.2 &&
-      scrollProgress > -0.1 &&
+      scrollProgress < 0.6 &&
+      scrollProgress > 0.35 &&
       !exploding &&
       sphereVisible &&
       hasBeenCentered &&
@@ -155,11 +159,11 @@ function ThreeDStructure({ scrollProgress }) {
       setExploding(true);
       setSphereVisible(false);
 
-      // Reset explosion after animation completes
+      // Reset explosion after animation completes (longer duration for particles to travel)
       setTimeout(() => {
         setExploding(false);
         setHasBeenCentered(false); // Reset for next time
-      }, 3000);
+      }, 5000);
     }
 
     // When scrolling back in (scrollProgress above 0.3), show sphere again
@@ -180,9 +184,9 @@ function ThreeDStructure({ scrollProgress }) {
       }
 
       // Start fading when approaching the explosion threshold
-      if (scrollProgress < 0.4) {
-        // Fade from full opacity to 0 as it goes from 0.4 to 0.2
-        const fadeOpacity = ((scrollProgress - 0.2) / 0.2) * 0.7;
+      if (scrollProgress < 0.65) {
+        // Fade from full opacity as approaching explosion zone (0.65 to 0.35)
+        const fadeOpacity = ((scrollProgress - 0.35) / 0.3) * 0.7;
         if (sphereRef.current.material) {
           sphereRef.current.material.opacity = Math.max(0.1, fadeOpacity);
         }

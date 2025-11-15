@@ -2,13 +2,14 @@
     width: 100%;
     height: 500px;
     position: relative;
-    margin: 4rem 0;
+    margin: 4rem 0 0 0; /* Remove bottom margin to connect with Projects */
     background: radial-gradient(
         ellipse at center,
         rgba(246, 211, 183, 0.05) 0%,
         rgba(0, 8, 35, 0) 70%
     );
-    overflow: hidden;
+    overflow: visible; /* Allow particles to overflow into next section */
+    pointer-events: none; /* Allow clicks to pass through to content below */
 }
 
 .three-d-divider::before {
@@ -43,10 +44,16 @@
 
 .three-d-divider canvas {
     cursor: grab;
+    pointer-events: auto; /* Only canvas itself is interactive */
 }
 
 .three-d-divider canvas:active {
     cursor: grabbing;
+}
+
+/* Make sure particles can render beyond canvas bounds */
+.three-d-divider > div {
+    overflow: visible !important;
 }
 
 /* Responsive */
