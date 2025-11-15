@@ -21,7 +21,7 @@ const projectsData = [
        description:
           'Hexlyn is an AI-powered SEO and digital marketing platform that I founded as my startup. The platform leverages artificial intelligence to provide comprehensive SEO analysis, keyword research, content optimization, and digital marketing insights. Built with modern technologies, Hexlyn helps businesses optimize their online presence and drive organic growth through data-driven strategies and automated SEO recommendations.',
        links: [
-          'https://www.hexlyn.com/',
+          '',
        ],
        imgs: [
           'hex0',

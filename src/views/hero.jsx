@@ -12,10 +12,7 @@ import { About } from './about'
 import { Projects } from './projects'
 import FloatingParticles from './FloatingParticles';
 import ThreeDDivider from './ThreeDDivider';
-// import Interactive3D from './Interactive3D';
-// import GeometricGrid from './GeometricGrid';
-// import SectionDivider from './SectionDivider';
-// import PhysicsDemo from './PhysicsDemo';
+
 
 // Register GSAP plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -27,10 +24,7 @@ export function Hero() {
     const scrollIndicatorRef = useRef();
     const [hasHeroAnimated, setHasHeroAnimated] = useState(false);
 
-    // Choose your preferred animation:
-    // 1. FloatingParticles - Modern, minimal, performs well
-    // 2. Interactive3D - 3D geometric shapes with mouse interaction
-    // 3. GeometricGrid - Ultra-minimal grid pattern
+
     const AnimationComponent = FloatingParticles;
 
     useEffect(() => {
@@ -47,7 +41,7 @@ export function Hero() {
                         delay: anime.stagger(10),
                         easing: 'easeOutExpo'
                     });
-                    setHasHeroAnimated(true); // Set the state to true after the animation
+                    setHasHeroAnimated(true); 
                 }
             });
         }, { threshold: 1 });

@@ -43,7 +43,9 @@ export function About() {
 
         });
 
-        // Parallax effects removed for cleaner scroll experience
+        tl.from('.main-layout', {
+        })
+
     });
 
     useEffect(() => {

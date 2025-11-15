@@ -2,7 +2,6 @@
   position: relative;
   display: inline-block;
   cursor: pointer;
-  /* Override the existing hover animation that moves the container */
   transition: none !important;
 }
 
