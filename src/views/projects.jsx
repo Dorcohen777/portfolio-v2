@@ -56,76 +56,8 @@ export function Projects() {
       }
    }, [])
 
-   // Parallax animations for project cards
-   useEffect(() => {
-      if (projectCardsRef.current.length === 0) return
-
-      const cards = projectCardsRef.current.filter(card => card !== null)
-
-      cards.forEach((card, index) => {
-         const isEven = index % 2 === 0
-
-         // Entrance animation - staggered reveal
-         gsap.fromTo(card,
-            {
-               opacity: 0,
-               y: 100,
-               rotateX: 15,
-               scale: 0.9,
-            },
-            {
-               opacity: 1,
-               y: 0,
-               rotateX: 0,
-               scale: 1,
-               duration: 1.2,
-               ease: 'power3.out',
-               scrollTrigger: {
-                  trigger: card,
-                  start: 'top 85%',
-                  toggleActions: 'play none none none',
-               }
-            }
-         )
-
-         // Parallax effect while scrolling
-         const projectInfo = card.querySelector('.project-info')
-         const projectImages = card.querySelector('.project-images')
-
-         if (projectInfo && projectImages) {
-            // Info moves slower (creates depth)
-            gsap.to(projectInfo, {
-               y: isEven ? -50 : -80,
-               scrollTrigger: {
-                  trigger: card,
-                  start: 'top bottom',
-                  end: 'bottom top',
-                  scrub: 1.5,
-               }
-            })
-
-            // Images move faster (foreground effect)
-            gsap.to(projectImages, {
-               y: isEven ? 80 : 50,
-               scrollTrigger: {
-                  trigger: card,
-                  start: 'top bottom',
-                  end: 'bottom top',
-                  scrub: 1,
-               }
-            })
-         }
-      })
-
-      // Cleanup
-      return () => {
-         ScrollTrigger.getAll().forEach(trigger => {
-            if (cards.some(card => trigger.vars.trigger === card)) {
-               trigger.kill()
-            }
-         })
-      }
-   }, [projects])
+   // Card animations removed for cleaner, simpler appearance
+   // Cards now appear immediately without entrance effects
 
    function addSpace(desc) {
       const descriptionWithLineBreaks = desc.split('.').join('.<br/> <br/>')

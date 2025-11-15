@@ -43,30 +43,7 @@ export function About() {
 
         });
 
-        // Parallax effect for about section
-        if (aboutContainerRef.current && aboutImgRef.current) {
-            // Content moves slower
-            gsap.to('.about-me-content', {
-                y: -60,
-                scrollTrigger: {
-                    trigger: aboutContainerRef.current,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1.5,
-                }
-            });
-
-            // Image moves faster (foreground effect)
-            gsap.to(aboutImgRef.current, {
-                y: 80,
-                scrollTrigger: {
-                    trigger: aboutContainerRef.current,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1,
-                }
-            });
-        }
+        // Parallax effects removed for cleaner scroll experience
     });
 
     useEffect(() => {
