@@ -14,9 +14,9 @@ export function RootCmp() {
                 <Header />
                 <main >
                     <Routes>
-                        <Route path='/new-portfolio' element={<Hero />} />
-                        <Route path='/new-portfolio/test-animations' element={<AnimationSelector />} />
-                        <Route path='/new-portfolio/showcase' element={<AnimationShowcase />} />
+                        <Route path='/' element={<Hero />} />
+                        <Route path='/test-animations' element={<AnimationSelector />} />
+                        <Route path='/showcase' element={<AnimationShowcase />} />
                     </Routes>
                 </main>
             </section>
