@@ -35,11 +35,11 @@
 }
 
 .hero-img-container {
-    max-width: 50%;
+    max-width: 45%;
     position: absolute;
     overflow: hidden;
     max-height: 90%;
-    margin-bottom: 130px;
+    margin-bottom: 15%;
     will-change: transform, opacity;
 }
 
